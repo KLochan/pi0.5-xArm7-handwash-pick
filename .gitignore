@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# ROS 2
+build/
+install/
+log/
+
+# Datasets and recordings
+data/
+datasets/
+recordings/
+demos/
+*.bag
+*.db3
+
+# Model checkpoints
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+
+# Hugging Face cache
+.cache/
+huggingface/
+
+# Large media
+*.mp4
+*.avi
+*.mov
+
+# Secrets
+.env
+credentials.json
+secrets.yaml
+*.key
+
+# Temporary files
+tmp/
+temp/
