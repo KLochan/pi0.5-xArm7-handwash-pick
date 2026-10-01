@@ -205,6 +205,50 @@ python3 tests/xarm_pi05_true_dryrun.py
 
 ---
 
+
+## Performance Benchmarks
+
+The values below summarize measurements already observed during development. They are reported as implementation benchmarks rather than a formal task-success evaluation.
+
+### Inference Latency
+
+| Platform | Mean Inference Time | Approx. Rate |
+|---|---:|---:|
+| RTX 5080 Laptop GPU | ~253 ms | ~4.0 Hz |
+| RTX 5090 Workstation GPU | ~62.8 ms | ~15.9 Hz |
+
+The RTX 5090 workstation substantially reduced π0.5 inference latency compared with the laptop platform.
+
+### Runtime Configuration
+
+| Parameter | Value |
+|---|---:|
+| Demonstrations | ~100 |
+| Dataset sampling rate | 6 Hz |
+| Sampling interval | ~167 ms |
+| Predicted action horizon | 15 steps |
+| Robot controls | 7 arm joints + 1 gripper |
+| Cameras | External + wrist Intel RealSense D435i |
+
+### Additional Timing Observation
+
+A separate multi-sample inference test recorded:
+
+```text
+5-sample inference time: 0.0869 s
+```
+
+### Real-Robot Evaluation Status
+
+The current system has demonstrated successful:
+
+- bottle approach,
+- grasp execution,
+- object lift,
+- and closed-loop xArm7 action execution.
+
+A formal success-rate study has not yet been completed. Future evaluation will report fixed-trial success rate, end-to-end task time, policy-call count, and minimum / mean / maximum inference latency.
+
 ## Repository Scope
 
 This repository contains the integration and experimental pipeline developed for the xArm7 handwash-bottle task, including:
