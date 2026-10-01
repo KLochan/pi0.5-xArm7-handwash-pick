@@ -57,6 +57,7 @@ Language Instruction
 Predicted Action Chunk
       ↓
 xArm7 + UF G2 Gripper
+```
 
 ## Real-Robot Setup
 
