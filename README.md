@@ -13,6 +13,14 @@
 </p>
 
 <p align="center">
+  <img src="assets/handwash_task_montage.jpg" width="920" alt="Handwash bottle picking task stages">
+</p>
+
+<p align="center">
+  <i>Task progression: initial scene → approach → pre-grasp → grasp → lift → successful pickup.</i>
+</p>
+
+<p align="center">
   <img src="assets/handwash_pick_demo.gif" width="760" alt="π0.5 xArm7 handwash bottle picking demo">
 </p>
 
@@ -104,6 +112,7 @@ More details are available in [docs/workflow.md](docs/workflow.md).
 pi0.5-xArm7-handwash-pick/
 ├── assets/
 │   ├── handwash_pick_demo.gif
+│   ├── handwash_task_montage.jpg
 │   └── xarm7_handwash_setup.jpg
 ├── data_collection/
 │   └── record_xarm_fresh_100.py
