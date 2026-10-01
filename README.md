@@ -1,142 +1,247 @@
 # π0.5 xArm7 Handwash Bottle Picking
 
 <p align="center">
-  <img src="assets/handwash_pick_demo.gif" width="760">
+  <b>Real-robot Vision-Language-Action deployment with π0.5 on UFactory xArm7</b>
 </p>
 
-This project presents a real-robot Vision-Language-Action pipeline for **handwash-bottle picking** using **π0.5** on a **UFactory xArm7** with a **UF G2 gripper** and dual **Intel RealSense D435i** cameras. The repository includes [data collection](data_collection), [data processing and LeRobot conversion](data_processing), [real-robot inference](inference), [dry-run tests](tests), and supporting [documentation](docs). Approximately 100 demonstrations were collected and converted to LeRobot format for π0.5 training and deployment.
+<p align="center">
+  <img src="https://img.shields.io/badge/VLA-%CF%800.5-6f42c1" alt="π0.5">
+  <img src="https://img.shields.io/badge/Robot-UFactory%20xArm7-0a7ea4" alt="xArm7">
+  <img src="https://img.shields.io/badge/ROS%202-Jazzy-22314e" alt="ROS 2 Jazzy">
+  <img src="https://img.shields.io/badge/Dataset-LeRobot-f2c94c" alt="LeRobot">
+  <img src="https://img.shields.io/badge/Cameras-2%C3%97%20RealSense%20D435i-2d9cdb" alt="RealSense">
+</p>
 
-## Task
+<p align="center">
+  <img src="assets/handwash_pick_demo.gif" width="760" alt="π0.5 xArm7 handwash bottle picking demo">
+</p>
 
-The robot is instructed to:
+<p align="center">
+  <i>Language instruction: “Pick up the handwash bottle.”</i>
+</p>
 
-> Pick up the handwash bottle.
+---
 
-The system receives:
+## Overview
 
-- External RGB camera image
-- Wrist RGB camera image
-- xArm7 joint state
-- Natural-language instruction
+This repository presents a complete real-robot pipeline for deploying **π0.5** on a **UFactory xArm7** for handwash-bottle picking. The system combines dual RGB observations, robot joint state, and a natural-language instruction to produce robot actions for the xArm7 and UF G2 gripper.
 
-and uses π0.5 to generate robot actions.
+The project covers the full workflow from **demonstration collection** and **data preprocessing** to **LeRobot conversion**, **π0.5 inference**, and **real-robot execution**.
 
-## Hardware
+### Key Features
 
-- UFactory xArm7
-- UF G2 gripper
-- 2 × Intel RealSense D435i
-- NVIDIA GPU workstation
+| Component | Details |
+|---|---|
+| VLA policy | π0.5 / OpenPI |
+| Robot | UFactory xArm7 |
+| Gripper | UF G2 |
+| Cameras | 2 × Intel RealSense D435i |
+| Middleware | ROS 2 Jazzy |
+| Dataset format | LeRobot |
+| Demonstrations | Approximately 100 real-robot demonstrations |
+| Task | Pick up the handwash bottle |
 
-## Dataset
+---
 
-Approximately 100 real-robot demonstrations were collected for the handwash-bottle picking task.
+## System Architecture
 
-The dataset was converted into LeRobot format for π0.5 training and inference.
-
-## System Pipeline
-
-```text
-External Camera
-      +
-Wrist Camera
-      +
-Robot Joint State
-      +
-Language Instruction
-      ↓
-     π0.5
-      ↓
-Predicted Action Chunk
-      ↓
-xArm7 + UF G2 Gripper
+```mermaid
+flowchart LR
+    A[External RGB Camera] --> E[Observation]
+    B[Wrist RGB Camera] --> E
+    C[xArm7 Joint State] --> E
+    D[Language Instruction] --> E
+    E --> F[π0.5 / OpenPI]
+    F --> G[Predicted Action Chunk]
+    G --> H[xArm7 + UF G2 Gripper]
 ```
+
+---
 
 ## Real-Robot Setup
 
 <p align="center">
-  <img src="assets/xarm7_handwash_setup.jpg" width="700">
+  <img src="assets/xarm7_handwash_setup.jpg" width="720" alt="xArm7 handwash bottle setup">
 </p>
 
-## Demo
+The setup uses an xArm7 with a UF G2 gripper and two Intel RealSense D435i cameras: one external camera and one wrist-mounted camera.
 
-<p align="center">
-  <img src="assets/handwash_pick_demo.gif" width="700">
-</p>
+---
 
-**Task:** “Pick up the handwash bottle.”
+## Dataset and Workflow
+
+Approximately **100 demonstrations** were collected for the handwash-bottle picking task and converted to LeRobot format.
+
+```mermaid
+flowchart TD
+    A[Collect demonstrations] --> B[Trim trajectories]
+    B --> C[Preprocess data]
+    C --> D[Convert to LeRobot format]
+    D --> E[π0.5 training / checkpoint]
+    E --> F[Inference server]
+    F --> G[Real-robot execution]
+```
+
+The corresponding scripts are organized as follows:
+
+| Stage | Script |
+|---|---|
+| Data collection | `data_collection/record_xarm_fresh_100.py` |
+| Trimming | `data_processing/trim_xarm_fresh_100.py` |
+| Preprocessing | `data_processing/preprocess_xarm_fresh_100.py` |
+| LeRobot conversion | `data_processing/xarm_to_lerobot_fresh_100.py` |
+| Real-robot inference | `inference/run_handwash_pick.py` |
+| Inference-only test | `inference/xarm_pi05_live_inference_only.py` |
+| Dry run | `tests/xarm_pi05_true_dryrun.py` |
+
+More details are available in [docs/workflow.md](docs/workflow.md).
+
+---
+
+## Repository Structure
+
+```text
+pi0.5-xArm7-handwash-pick/
+├── assets/
+│   ├── handwash_pick_demo.gif
+│   └── xarm7_handwash_setup.jpg
+├── data_collection/
+│   └── record_xarm_fresh_100.py
+├── data_processing/
+│   ├── preprocess_xarm_fresh_100.py
+│   ├── trim_xarm_fresh_100.py
+│   └── xarm_to_lerobot_fresh_100.py
+├── docs/
+│   ├── setup.md
+│   └── workflow.md
+├── inference/
+│   ├── run_handwash_pick.py
+│   └── xarm_pi05_live_inference_only.py
+├── tests/
+│   └── xarm_pi05_true_dryrun.py
+├── .gitignore
+├── README.md
+└── requirements.txt
+```
+
+---
 
 ## Installation
 
-This repository assumes that ROS 2 Jazzy, the UFactory xArm ROS 2 packages, the RealSense camera stack, and the OpenPI / π0.5 environment are already installed.
-
-1. Clone this repository and enter the project folder.
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/KLochan/pi0.5-xArm7-handwash-pick.git
 cd pi0.5-xArm7-handwash-pick
 ```
 
-2. Install the general Python dependencies.
+### 2. Install general Python dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Source ROS 2 and the xArm workspace.
+### 3. Source ROS 2 and the xArm workspace
 
 ```bash
 source /opt/ros/jazzy/setup.bash
 source ~/xarm_ws/install/setup.bash
 ```
 
-4. Start the required robot and camera interfaces for your local setup.
+This project also assumes that the following are already configured:
 
-5. Start the π0.5 / OpenPI inference server from the OpenPI environment.
+- ROS 2 Jazzy
+- UFactory xArm ROS 2 packages
+- Intel RealSense camera stack
+- OpenPI / π0.5 environment
+- `openpi_client`
 
-6. Run the real-robot handwash picking client.
+See [docs/setup.md](docs/setup.md) for additional setup notes.
+
+---
+
+## Running the Project
+
+### Real-robot execution
 
 ```bash
 python3 inference/run_handwash_pick.py
 ```
 
-For an inference-only check, use:
+### Inference-only check
 
 ```bash
 python3 inference/xarm_pi05_live_inference_only.py
 ```
 
-For a dry run before commanding the robot, use:
+### Dry run
 
 ```bash
 python3 tests/xarm_pi05_true_dryrun.py
 ```
 
-> **Safety:** Verify the robot workspace, emergency-stop access, joint limits, gripper state, camera streams, and predicted actions before enabling real-robot motion.
+> **Safety:** Before enabling robot motion, verify the workspace, emergency-stop access, joint limits, gripper state, camera streams, and predicted actions.
 
-More setup details are available in [docs/setup.md](docs/setup.md), and the data-to-deployment pipeline is summarized in [docs/workflow.md](docs/workflow.md).
+---
+
+## Demo
+
+<p align="center">
+  <img src="assets/handwash_pick_demo.gif" width="720" alt="Handwash bottle picking demo">
+</p>
+
+<p align="center">
+  <b>Task:</b> “Pick up the handwash bottle.”
+</p>
+
+---
 
 ## Repository Scope
 
-This repository contains the xArm7 integration, data-collection, preprocessing, LeRobot conversion, and real-robot inference code developed for the handwash-bottle picking experiment.
+This repository contains the integration and experimental pipeline developed for the xArm7 handwash-bottle task, including:
 
-Large datasets, trained checkpoints, recorded ROS bags, Hugging Face caches, and upstream third-party repositories are intentionally excluded.
+- real-robot demonstration recording,
+- trajectory trimming and preprocessing,
+- conversion to LeRobot format,
+- π0.5 inference,
+- xArm7 action execution, and
+- dry-run / inference-only testing.
+
+Large datasets, checkpoints, ROS bags, Hugging Face caches, and upstream third-party repositories are intentionally excluded.
+
+---
+
+## Roadmap
+
+- [x] Collect real-robot demonstrations
+- [x] Convert demonstrations to LeRobot format
+- [x] Train / serve a π0.5 checkpoint
+- [x] Run real-robot inference on xArm7
+- [x] Add inference-only and dry-run validation
+- [ ] Add quantitative success-rate evaluation
+- [ ] Add latency and inference-time benchmarks
+- [ ] Add action-caching experiments
+- [ ] Explore reduced flow-matching inference steps
+- [ ] Extend to multi-object manipulation tasks
+
+---
 
 ## Acknowledgements
 
-This project builds on several external software and hardware ecosystems:
+This project builds on:
 
-- **π0.5 / OpenPI** for the Vision-Language-Action policy and inference infrastructure.
-- **LeRobot** for robot-learning dataset tooling and dataset representation.
-- **ROS 2** for robot communication and middleware.
-- **UFactory xArm7 and xArm ROS 2 packages** for robot control.
-- **Intel RealSense** cameras for visual observations.
+- **π0.5 / OpenPI** for the Vision-Language-Action policy and inference infrastructure
+- **LeRobot** for robot-learning dataset tooling and representation
+- **ROS 2** for middleware and robot communication
+- **UFactory xArm7 / xArm ROS 2** for robot control
+- **Intel RealSense** for visual observations
 
-The third-party frameworks and drivers above remain subject to their respective licenses and terms. This repository focuses on the integration and experimental pipeline for deploying π0.5 on the xArm7 handwash-bottle task.
+These third-party frameworks, drivers, and hardware platforms remain subject to their respective licenses and terms.
+
+---
 
 ## Citation
 
-If you use this repository in academic work, please cite the relevant upstream π0.5 / OpenPI and LeRobot publications or repositories in addition to referencing this implementation.
+If you use this repository in academic work, please cite the relevant upstream **π0.5 / OpenPI** and **LeRobot** publications or repositories in addition to referencing this implementation.
 
-A project-specific BibTeX entry can be added here if this work is released with an associated paper.
-
+A project-specific BibTeX entry can be added here if this work is released with an associated publication.
