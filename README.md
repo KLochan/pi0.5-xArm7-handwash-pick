@@ -57,3 +57,17 @@ Language Instruction
 Predicted Action Chunk
       ↓
 xArm7 + UF G2 Gripper
+
+## Real-Robot Setup
+
+<p align="center">
+  <img src="assets/xarm7_handwash_setup.jpg" width="700">
+</p>
+
+## Demo
+
+<p align="center">
+  <img src="assets/handwash_pick_demo.gif" width="700">
+</p>
+
+**Task:** “Pick up the handwash bottle.”
