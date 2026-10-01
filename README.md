@@ -297,6 +297,8 @@ Large datasets, checkpoints, ROS bags, Hugging Face caches, and upstream third-p
 
 ## Acknowledgements
 
+This project was carried out at **CINAPS Lab, Graduate School of System Informatics, Kobe University, Japan**.
+
 This project builds on:
 
 - **π0.5 / OpenPI** for the Vision-Language-Action policy and inference infrastructure
@@ -306,11 +308,3 @@ This project builds on:
 - **Intel RealSense** for visual observations
 
 These third-party frameworks, drivers, and hardware platforms remain subject to their respective licenses and terms.
-
----
-
-## Citation
-
-If you use this repository in academic work, please cite the relevant upstream **π0.5 / OpenPI** and **LeRobot** publications or repositories in addition to referencing this implementation.
-
-A project-specific BibTeX entry can be added here if this work is released with an associated publication.
