@@ -81,13 +81,13 @@ The setup uses an xArm7 with a UF G2 gripper and two Intel RealSense D435i camer
 Approximately **100 demonstrations** were collected for the handwash-bottle picking task and converted to LeRobot format.
 
 ```mermaid
-flowchart TD
-    A[Collect demonstrations] --> B[Trim trajectories]
-    B --> C[Preprocess data]
-    C --> D[Convert to LeRobot format]
-    D --> E[π0.5 training / checkpoint]
-    E --> F[Inference server]
-    F --> G[Real-robot execution]
+flowchart LR
+    A[Collect demos] --> B[Trim]
+    B --> C[Preprocess]
+    C --> D[LeRobot]
+    D --> E[π0.5 train]
+    E --> F[Inference]
+    F --> G[Robot execution]
 ```
 
 The corresponding scripts are organized as follows:
