@@ -212,21 +212,30 @@ python3 tests/xarm_pi05_true_dryrun.py
 
 ## Performance Benchmarks
 
-The values below summarize measurements already observed during development. They are reported as implementation benchmarks rather than a formal task-success evaluation.
+The benchmark below is derived from a saved real-robot controller log on the RTX 5090 workstation. It contains **98 completed policy inference calls**.
 
-### Inference Latency
+### Verified π0.5 Inference Latency
 
-| Platform | Mean Inference Time | Approx. Rate |
-|---|---:|---:|
-| RTX 5080 Laptop GPU | ~253 ms | ~4.0 Hz |
-| RTX 5090 Workstation GPU | ~62.8 ms | ~15.9 Hz |
+| Metric | Verified value |
+|---|---:|
+| Policy inference calls | **98** |
+| Median latency | **99.75 ms** |
+| P95 latency | **104.33 ms** |
+| P99 latency | **413.04 ms** |
+| Minimum latency | **92.90 ms** |
+| Raw mean latency | **203.82 ms** |
+| Maximum latency | **10.308 s** |
+| Calls below 1 s | **97 / 98** |
+| Mean latency below 1 s | **99.66 ms** |
+| Median latency below 1 s | **99.70 ms** |
 
-The RTX 5090 workstation substantially reduced π0.5 inference latency compared with the laptop platform.
+Typical π0.5 policy inference was approximately **100 ms**. One **10.308 s** latency spike inflated the raw mean, so the **median** and **P95** are more representative of normal runtime behavior. The typical equivalent policy inference rate was therefore approximately **10 Hz**.
 
 ### Runtime Configuration
 
 | Parameter | Value |
 |---|---:|
+| GPU | NVIDIA GeForce RTX 5090 |
 | Demonstrations | ~100 |
 | Dataset sampling rate | 6 Hz |
 | Sampling interval | ~167 ms |
@@ -234,24 +243,21 @@ The RTX 5090 workstation substantially reduced π0.5 inference latency compared 
 | Robot controls | 7 arm joints + 1 gripper |
 | Cameras | External + wrist Intel RealSense D435i |
 
-### Additional Timing Observation
+### Verified Real-Robot Episode
 
-A separate multi-sample inference test recorded:
+A saved controller log confirms at least one complete physical **pick–lift–release** episode:
 
-```text
-5-sample inference time: 0.0869 s
-```
+| Result | Verified value |
+|---|---:|
+| Successful completed episode | **1** |
+| Lift target | **50 mm** |
+| Achieved lift height | **67 mm** |
+| Hold duration | **1 s** |
+| Return to HOME | **Successful** |
 
-### Real-Robot Evaluation Status
+A formal multi-trial success rate is not reported yet because the available log contains one fully completed episode and a subsequently started episode without a completion marker.
 
-The current system has demonstrated successful:
-
-- bottle approach,
-- grasp execution,
-- object lift,
-- and closed-loop xArm7 action execution.
-
-A formal success-rate study has not yet been completed. An evaluation template and summary script are provided in [evaluation/](evaluation/) to record fixed-trial success rate, end-to-end task time, policy-call count, and minimum / mean / maximum inference latency.
+An evaluation template and summary script are provided in [evaluation/](evaluation/) for future fixed-trial experiments.
 
 Run the summary after completing the trials:
 
