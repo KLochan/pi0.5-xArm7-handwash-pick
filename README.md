@@ -1,17 +1,10 @@
 # π0.5 xArm7 Handwash Bottle Picking
 
-Vision-Language-Action implementation using π0.5 on a UFactory xArm7 robot for real-world handwash bottle picking.
+<p align="center">
+  <img src="assets/handwash_pick_demo.gif" width="760">
+</p>
 
-## Overview
-
-This project integrates:
-
-- π0.5 Vision-Language-Action model
-- UFactory xArm7 robot
-- UF G2 gripper
-- Dual Intel RealSense D435i cameras
-- LeRobot-format demonstrations
-- Real-robot inference and action execution
+This project presents a real-robot Vision-Language-Action pipeline for **handwash-bottle picking** using **π0.5** on a **UFactory xArm7** with a **UF G2 gripper** and dual **Intel RealSense D435i** cameras. The repository includes [data collection](data_collection), [data processing and LeRobot conversion](data_processing), [real-robot inference](inference), [dry-run tests](tests), and supporting [documentation](docs). Approximately 100 demonstrations were collected and converted to LeRobot format for π0.5 training and deployment.
 
 ## Task
 
@@ -73,7 +66,7 @@ xArm7 + UF G2 Gripper
 
 **Task:** “Pick up the handwash bottle.”
 
-## How to Run
+## Installation
 
 This repository assumes that ROS 2 Jazzy, the UFactory xArm ROS 2 packages, the RealSense camera stack, and the OpenPI / π0.5 environment are already installed.
 
