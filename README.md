@@ -126,6 +126,10 @@ pi0.5-xArm7-handwash-pick/
 ├── inference/
 │   ├── run_handwash_pick.py
 │   └── xarm_pi05_live_inference_only.py
+├── evaluation/
+│   ├── README.md
+│   ├── trials.csv
+│   └── summarize_results.py
 ├── tests/
 │   └── xarm_pi05_true_dryrun.py
 ├── .gitignore
@@ -247,7 +251,13 @@ The current system has demonstrated successful:
 - object lift,
 - and closed-loop xArm7 action execution.
 
-A formal success-rate study has not yet been completed. Future evaluation will report fixed-trial success rate, end-to-end task time, policy-call count, and minimum / mean / maximum inference latency.
+A formal success-rate study has not yet been completed. An evaluation template and summary script are provided in [evaluation/](evaluation/) to record fixed-trial success rate, end-to-end task time, policy-call count, and minimum / mean / maximum inference latency.
+
+Run the summary after completing the trials:
+
+```bash
+python3 evaluation/summarize_results.py evaluation/trials.csv
+```
 
 ## Repository Scope
 
@@ -271,8 +281,8 @@ Large datasets, checkpoints, ROS bags, Hugging Face caches, and upstream third-p
 - [x] Train / serve a π0.5 checkpoint
 - [x] Run real-robot inference on xArm7
 - [x] Add inference-only and dry-run validation
-- [ ] Add quantitative success-rate evaluation
-- [ ] Add latency and inference-time benchmarks
+- [ ] Complete quantitative success-rate evaluation
+- [x] Add latency and inference-time benchmark reporting
 - [ ] Add action-caching experiments
 - [ ] Explore reduced flow-matching inference steps
 - [ ] Extend to multi-object manipulation tasks
